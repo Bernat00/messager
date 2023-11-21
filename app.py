@@ -40,8 +40,15 @@ def login(data):
                 'username': data['username']
                 # kell majd role?
             }
+            print(request.sid)
             ConnectedUser.add_user(g.user['id'], g.user['username'])
             socket.emit('redirect', {'url': url_for('chat')})
+
+
+@socket.on('messege')
+def messege(data):
+    print(request.sid)
+    socket.emit('mesage', data['message'], to=ConnectedUser.id_from_username(data['recepiant']))
 
 
 @socket.on('disconnect')

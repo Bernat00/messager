@@ -3,8 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script>
+        socket = io()
+    </script>
 </head>
 <body>
-<h1>teszt</h1>
+<textarea id="text"></textarea>
+<input type="text" id="recipient">
+<button type="button" id="send-btn">send</button>
+<script>
+    document.getElementById('send-btn').addEventListener('click', function (){
+        let data =
+                {
+                message: document.getElementById('text').value,
+                recepiant: document.getElementById('recipient').value
+                };
+
+            socket.emit('messege', data);
+        });
+</script>
+<br>
+<br>
+<br>
+<p id="receved"></p>
+<script>
+    socket.on("messege", function (msg){
+            document.getElementById('receved').innerHTML = msg
+        })
+</script>
 </body>
 </html>
